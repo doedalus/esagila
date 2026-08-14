@@ -17,5 +17,25 @@ class TokenResponse(BaseModel):
     token_type: str = 'bearer'
     refresh_token: str
 
+
 class RefreshTokenRequest(BaseModel):
     refresh_token: str
+
+
+class BookCreate(BaseModel):
+    title: str
+    author: str
+    description: str
+
+
+class BookResponse(BaseModel):
+    id: int
+    title: str
+    author: str
+    description: str
+
+
+class BookUpdate(BaseModel):
+    title: str
+    author: str
+    description: str

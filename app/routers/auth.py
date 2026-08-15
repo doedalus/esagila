@@ -83,3 +83,15 @@ def refresh(data: RefreshTokenRequest, db: Session = Depends(get_db)):
     db.refresh(new_refresh_token)
 
     return TokenResponse(access_token=new_access_token, refresh_token=new_refresh_token.id)
+
+@router.post("/logout")
+def logout(data: RefreshTokenRequest, db: Session = Depends(get_db)):
+    refresh_token = db.query(RefreshToken).filter(RefreshToken.id == data.refresh_token).one_or_none()
+
+    if refresh_token is None:
+        raise HTTPException(status_code=400, detail="Refresh token does not exist")
+
+    db.query(RefreshToken).filter(RefreshToken.user_id == refresh_token.user_id).delete()
+    db.commit()
+
+    return {"message": "Successfully logged out"}

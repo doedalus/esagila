@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr, ConfigDict
+from pydantic import BaseModel, Field, EmailStr
 
 
 class UserRegister(BaseModel):
@@ -63,4 +63,10 @@ class UserBookResponse(BaseModel):
 class UserBookData(BaseModel):
     review: str | None = Field(max_length=1000, default=None)
     rating: int | None = Field(le=10, ge=1, default=None)
+
+
+class UserMeResponse(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
 

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import uuid
 from typing import List
-from sqlalchemy import ForeignKey, CheckConstraint, UniqueConstraint
+from sqlalchemy import ForeignKey, CheckConstraint
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship, mapped_column
 
 

@@ -3,8 +3,9 @@ from fastapi import APIRouter, HTTPException
 from fastapi.params import Depends
 from sqlalchemy.orm import Session
 from app.db import get_db
+from app.dependencies import get_current_user
 from app.models import User, RefreshToken
-from app.schemas import UserRegister, UserLogin, TokenResponse, RefreshTokenRequest
+from app.schemas import UserRegister, UserLogin, TokenResponse, RefreshTokenRequest, UserMeResponse
 from app.security import hash_password, verify_password, create_access_token
 from sqlalchemy import or_
 
@@ -95,3 +96,11 @@ def logout(data: RefreshTokenRequest, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "Successfully logged out"}
+
+@router.get("/me", response_model=UserMeResponse)
+def me(user: User = Depends(get_current_user)):
+    return UserMeResponse(
+        id=user.id,
+        username=user.username,
+        email=user.email,
+    )

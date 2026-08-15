@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from pwdlib import PasswordHash
 from jose import jwt, JWTError
 from app.settings import settings
@@ -16,7 +16,7 @@ def verify_password(plain_password, hashed_password):
 
 def create_access_token(data: dict):
     payload = data.copy()
-    payload["exp"] = datetime.now(timezone.utc) + timedelta(minutes=30)
+    payload["exp"] = datetime.now() + timedelta(minutes=30)
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
 def decode_access_token(token: str):

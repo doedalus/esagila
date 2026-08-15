@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import uuid
 from typing import List
-from sqlalchemy import ForeignKey, CheckConstraint
+from sqlalchemy import ForeignKey, CheckConstraint, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, Mapped, relationship, mapped_column
 
 
@@ -43,6 +43,5 @@ class UserBook(Base):
     book_id: Mapped[int] = mapped_column(ForeignKey("books.id", ondelete="CASCADE"), nullable=False, primary_key=True)
     rating:  Mapped[int | None] = mapped_column(default=None, nullable=True)
     review: Mapped[str | None] = mapped_column(default=None, nullable=True)
-    state: Mapped[str] = mapped_column(default="read", nullable=False)
     user: Mapped['User'] = relationship("User", back_populates="user_books")
     book: Mapped['Book'] = relationship("Book", back_populates="user_books")
